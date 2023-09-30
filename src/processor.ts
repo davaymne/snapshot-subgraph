@@ -34,6 +34,9 @@ export const processor = new EvmBatchProcessor()
     .addTransaction({
         to: ['0x0000000000000000000000000000000000000000'],
     })
+    .addLog({
+        address: ["0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446"],
+    });
 
 export type Fields = EvmBatchProcessorFields<typeof processor>
 export type Block = BlockHeader<Fields>
