@@ -1,6 +1,6 @@
 type Delegation @entity {
   id: ID!
-  delegator: Sring!
+  delegator: String!
   space: String!
   delegate: String!
   timestamp: Int!
