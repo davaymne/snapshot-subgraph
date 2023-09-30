@@ -9,14 +9,14 @@ export class Delegation {
     @PrimaryColumn_()
     id!: string
 
-    @Column_("bytea", {nullable: false})
-    delegator!: Uint8Array
+    @Column_("text", {nullable: false})
+    delegator!: string
 
     @Column_("text", {nullable: false})
     space!: string
 
-    @Column_("bytea", {nullable: false})
-    delegate!: Uint8Array
+    @Column_("text", {nullable: false})
+    delegate!: string
 
     @Column_("int4", {nullable: false})
     timestamp!: number
