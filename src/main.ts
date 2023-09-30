@@ -1,21 +1,25 @@
 import {TypeormDatabase} from '@subsquid/typeorm-store'
-import {Burn} from './model'
+import {Delegation} from './model'
 import {processor} from './processor'
+import * as DelegateRegistry from "./abi/DelegateRegistry";
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
-    const burns: Burn[] = []
+    const delegations: Delegation[] = []
     for (let c of ctx.blocks) {
-        for (let tx of c.transactions) {
+        for (let log of c.logs) {
             // decode and normalize the tx data
-            burns.push(
-                new Burn({
-                    id: tx.id,
-                    block: c.header.height,
-                    address: tx.from,
-                    value: tx.value,
-                    txHash: tx.hash,
-                })
-            )
+            if(log.topics[0] === DelegateRegistry.events.SetDelegate.topic) {
+                let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log)
+                let delegation = new Delegation({
+                    id: id.toString(),
+                    delegator: delegator,
+                    space: id,
+                    delegate: delegate,
+                    timestamp: 
+
+
+                });
+            }
         }
     }
     // apply vectorized transformations and aggregations

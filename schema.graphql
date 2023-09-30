@@ -1,8 +1,8 @@
 type Delegation @entity {
   id: ID!
-  delegator: Bytes!
+  delegator: Sring!
   space: String!
-  delegate: Bytes!
+  delegate: String!
   timestamp: Int!
 }
 
