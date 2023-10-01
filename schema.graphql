@@ -9,12 +9,12 @@ type Delegation @entity {
 type Block @entity {
   id: ID!
   number: BigInt!
-  timestamp: BigInt!
+  timestamp: DateTime!
 }
 
 type Sig @entity {
   id: ID!
   account: Bytes!
   msgHash: String!
-  timestamp: BigInt!
+  timestamp: DateTime!
 }
