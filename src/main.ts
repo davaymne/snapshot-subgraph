@@ -1,10 +1,11 @@
 import {TypeormDatabase} from '@subsquid/typeorm-store'
-import {Delegation} from './model'
+import {Delegation, Block} from './model'
 import {processor} from './processor'
 import * as DelegateRegistry from "./abi/DelegateRegistry";
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     for (let c of ctx.blocks) {
+        await ctx.store.upsert(new Block({id: c.header.hash, number: BigInt(c.header.height), timestamp: new Date(c.header.timestamp)}));
         for (let log of c.logs) {
             const delegations: Delegation[] = []
             // decode and normalize the tx data
