@@ -5,8 +5,8 @@ import * as DelegateRegistry from "./abi/DelegateRegistry";
 import * as GnosisSafe from "./abi/GnosisSafe";
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
+    const sigs: Sig[] = []
     for (let c of ctx.blocks) {
-        const sigs: Sig[] = []
         await ctx.store.upsert(new Block({id: c.header.hash, number: BigInt(c.header.height), timestamp: new Date(c.header.timestamp)}));
         for (let log of c.logs) {
             const delegations: Delegation[] = []
