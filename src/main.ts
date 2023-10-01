@@ -53,7 +53,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     // apply vectorized transformations and aggregations
     const startBlock = ctx.blocks.at(0)?.header.height
     const endBlock = ctx.blocks.at(-1)?.header.height
-    ctx.log.info(`Delegations  ${startBlock} to ${endBlock}`)
+    ctx.log.info(`Blocks:  ${startBlock} to ${endBlock}`)
 
     // upsert batches of entities with batch-optimized ctx.store.save
     await ctx.store.upsert(sigs);
