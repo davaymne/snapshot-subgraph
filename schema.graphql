@@ -14,7 +14,7 @@ type Block @entity {
 
 type Sig @entity {
   id: ID!
-  account: Bytes!
+  account: String!
   msgHash: String!
   timestamp: DateTime!
 }
