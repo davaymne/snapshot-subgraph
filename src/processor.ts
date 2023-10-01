@@ -9,6 +9,9 @@ import {
 } from '@subsquid/evm-processor'
 import * as DelegateRegistry from "./abi/DelegateRegistry";
 import * as GnosisSafe from "./abi/GnosisSafe";
+import * as ProxyFactory100 from "./abi/GnosisSafeProxyFactory_v1.0.0";
+import * as ProxyFactory111 from "./abi/GnosisSafeProxyFactory_v1.1.1";
+import * as ProxyFactory130 from "./abi/GnosisSafeProxyFactory_v1.3.0";
 export const processor = new EvmBatchProcessor()
     .setDataSource({
         // Change the Archive endpoints for run the squid
@@ -39,6 +42,18 @@ export const processor = new EvmBatchProcessor()
     .addLog({
         address: ["0x12302fE9c02ff50939BaAaaf415fc226C078613C", "0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B", "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2"],
         topic0: [GnosisSafe.events.SignMsg.topic],
+    })
+    .addLog({
+        address: ["0x12302fE9c02ff50939BaAaaf415fc226C078613C"],
+        topic0: [ProxyFactory100.events.ProxyCreation.topic],
+    })
+    .addLog({
+        address: ["0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B"],
+        topic0: [ProxyFactory111.events.ProxyCreation.topic],
+    })
+    .addLog({
+        address: ["0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2"],
+        topic0: [ProxyFactory130.events.ProxyCreation.topic],
     });
 
 export type Fields = EvmBatchProcessorFields<typeof processor>
