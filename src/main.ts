@@ -59,7 +59,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     // upsert batches of entities with batch-optimized ctx.store.save
     await ctx.store.upsert(sigs);
     await ctx.store.upsert([...delegationsSet.values()]);
-    await ctx.store.remove(Delegation, [...delegationsClear]);
+    if (delegationsClear.length != 0) {await ctx.store.remove(Delegation, [...delegationsClear]);}
 });
 
 function extractData(log: any, event: any, c: any): {
