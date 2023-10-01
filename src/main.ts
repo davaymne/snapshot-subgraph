@@ -15,7 +15,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                     delegator: delegator,
                     space: id,
                     delegate: delegate,
-                    timestamp: c.header.timestamp,
+                    timestamp: new Date(c.header.timestamp),
                 });
                 ctx.log.info(`SetDelegate: block: ${c.header.height}, ${delegation.id}, ${delegation.delegator}, ${delegation.space}, ${delegation.delegate}, ${delegation.timestamp}`);
                 delegations.push(delegation);
@@ -28,7 +28,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                     delegator: delegator,
                     space: id,
                     delegate: delegate,
-                    timestamp: c.header.timestamp,
+                    timestamp: new Date(c.header.timestamp),
                 });
                 ctx.log.info(`ClearDelegate: block: ${c.header.height}, ${delegation.id}, ${delegation.delegator}, ${delegation.space}, ${delegation.delegate}, ${delegation.timestamp}`);
                 delegations.push(delegation);
