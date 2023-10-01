@@ -26,28 +26,25 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
             }
             // decode and normalize the tx data SetDelegate
             if(log.topics[0] === DelegateRegistry.events.SetDelegate.topic) {
-                let {id, delegator, space, delegate, timestamp} = extractData(DelegateRegistry.events.SetDelegate, log, c);
-                ctx.log.info(`SetDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}, ${timestamp}`);
+                let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log);
+                let space = id;
+                id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
+                ctx.log.info(`SetDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}`);
                 delegationsSet.set(id, new Delegation({
                     id: id,
                     delegator: delegator,
-                    space: space,
+                    space: id,
                     delegate: delegate,
-                    timestamp: timestamp,
+                    timestamp: new Date(c.header.timestamp),
                 }))
             }
             // decode and normalize the tx data ClearDelegate
             if(log.topics[0] === DelegateRegistry.events.ClearDelegate.topic) {
-                let {id, delegator, space, delegate, timestamp} = extractData(DelegateRegistry.events.ClearDelegate, log, c);
-                ctx.log.info(`ClearDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}, ${timestamp}`);
-                let delegation = new Delegation({
-                    id: id,
-                    delegator: delegator,
-                    space: space,
-                    delegate: delegate,
-                    timestamp: timestamp,
-                })
-                delegationsClear.push(delegation.id);
+                let {delegator, id, delegate} = DelegateRegistry.events.ClearDelegate.decode(log);
+                let space = id;
+                id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
+                ctx.log.info(`ClearDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}`);
+                delegationsClear.push(id);
             }
         }
     }
@@ -61,19 +58,4 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     await ctx.store.upsert([...delegationsSet.values()]);
     if (delegationsClear.length != 0) {await ctx.store.remove(Delegation, [...delegationsClear]);}
 });
-
-function extractData(log: any, event: any, c: any): {
-    id: string,
-    delegator: string,
-    space: string,
-    delegate: string,
-    timestamp: Date
-
-} {
-    let {delegator, id, delegate} = event.decode(log);
-    let space = id
-    let timestamp = new Date(c.header.timestamp);
-    id = delegator.concat('-').concat(space).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
-    return {id, delegator, space, delegate, timestamp};
-}
 
