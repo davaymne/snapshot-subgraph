@@ -33,7 +33,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 delegationsSet.set(id, new Delegation({
                     id: id,
                     delegator: delegator,
-                    space: id,
+                    space: space,
                     delegate: delegate,
                     timestamp: new Date(c.header.timestamp),
                 }))
