@@ -1,3 +1,6 @@
+
+![68747470733a2f2f75706c6f6164732d73736c2e776562666c6f772e636f6d2f3633623561393935386663636564636636376437313661632f3634363632646633613561353638666439396533363030635f53717569645f506f73655f315f57686974652d7472616e73706172656e742d736c696d253230](https://github.com/davaymne/snapshot-subgraph/assets/29555611/cfb9fbce-5959-41c7-b7dd-69e8c95bf08a)
+
 # Snapshot Subgraph
 
 This is a starter **Snapshot Subgraph** ported from The Graph [Snapshot Subgraph](https://thegraph.com/hosted-service/subgraph/snapshot-labs/snapshot). 
