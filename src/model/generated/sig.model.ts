@@ -9,8 +9,8 @@ export class Sig {
     @PrimaryColumn_()
     id!: string
 
-    @Column_("bytea", {nullable: false})
-    account!: Uint8Array
+    @Column_("text", {nullable: false})
+    account!: string
 
     @Column_("text", {nullable: false})
     msgHash!: string
