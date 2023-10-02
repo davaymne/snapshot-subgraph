@@ -50,6 +50,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
             }
             // decode and normalize the tx data ClearDelegate
             if(log.topics[0] === DelegateRegistry.events.ClearDelegate.topic) {
+                if (log.address.toLowerCase()!=GNOSISSAFE) {
+                    continue
+                }
                 let {delegator, id, delegate} = DelegateRegistry.events.ClearDelegate.decode(log);
                 let space = id;
                 id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
