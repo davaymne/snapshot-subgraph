@@ -6,6 +6,10 @@ import * as GnosisSafe from "./abi/GnosisSafe";
 import { time } from 'console';
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
+    const PROXYFACTORY100 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
+    const PROXYFACTORY111 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
+    const PROXYFACTORY130 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
+    const GNOSISSAFE = '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'.toLowerCase()
     const sigs: Sig[] = []
     const delegationsSet: Map<string, Delegation> = new Map()
     const delegationsClear: string[] = []
@@ -14,6 +18,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
         for (let log of c.logs) {
             // decode and normalize the tx data GnosisSafe
             if(log.topics[0] === GnosisSafe.events.SignMsg.topic) {
+                if (![PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
+                    continue
+                }
                 let {msgHash} = GnosisSafe.events.SignMsg.decode(log)
                 let sig = new Sig({
                     id: log.id,
@@ -26,6 +33,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
             }
             // decode and normalize the tx data SetDelegate
             if(log.topics[0] === DelegateRegistry.events.SetDelegate.topic) {
+                if (log.address.toLowerCase()!=GNOSISSAFE) {
+                    continue
+                }
                 let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log);
                 let space = id;
                 id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
