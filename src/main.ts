@@ -97,17 +97,25 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
 
 function getGnosisID(ctx: Context, log: Log): string {
     ctx.log.info(`getGnosisID_1: ${log.block.height}, ${log.address}, {log.address}`)
-    let proxy = ''
-    let singleton = ''
-    if (log.address.toLowerCase() === PROXYFACTORY100) {let proxy = ProxyFactory100.events.ProxyCreation.decode(log)}
-    if (log.address.toLowerCase() === PROXYFACTORY111) {let proxy = ProxyFactory111.events.ProxyCreation.decode(log)} 
-    if (log.address.toLowerCase() === PROXYFACTORY130) {let { proxy, singleton } = ProxyFactory130.events.ProxyCreation.decode(log)} 
+    let proxy: string = ''
+    let singleton: string = ''
+    if (log.address.toLowerCase() === PROXYFACTORY100) {
+        proxy = ProxyFactory100.events.ProxyCreation.decode(log).proxy
+    }
+    if (log.address.toLowerCase() === PROXYFACTORY111) {
+        proxy = ProxyFactory111.events.ProxyCreation.decode(log).proxy
+    } 
+    if (log.address.toLowerCase() === PROXYFACTORY130) { 
+        let event = ProxyFactory130.events.ProxyCreation.decode(log)
+        proxy = event.proxy
+    } 
     //let { proxy, singleton } = ProxyFactory130.events.ProxyCreation.decode(log)
     ctx.log.info(`getGnosisID_2: ${proxy}`)
-    let id = proxy.toLowerCase()
+    let id = proxy[0].toLowerCase()
     ctx.log.info(`getGnosisID_3: ${id}`)
     factoryGnosis.add(id)
     ctx.log.debug({block: log.block}, `Created Gnosis ID ${id}`)
     return id
 }
+
 
