@@ -17,9 +17,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     const sigs: Sig[] = []
     const delegationsSet: Map<string, Delegation> = new Map()
     const delegationsClear: string[] = []
-    //if (!factoryGnosis) {
-    //    factoryGnosis = await ctx.store.findBy(Sig, {}).then((q) => new Set(q.map((i) => i.id)))
-    //}
+    if (!factoryGnosis) {
+        factoryGnosis = await ctx.store.findBy(Sig, {}).then((q) => new Set(q.map((i) => i.id)))
+    }
     let gnosis: string[] = []
     for (let c of ctx.blocks) {
         let delegateLog = false
