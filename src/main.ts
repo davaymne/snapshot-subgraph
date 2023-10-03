@@ -29,6 +29,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
             if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
                 //gnosis.push(getGnosisID(ctx, log))
                 getGnosisID(ctx, log)
+            }
             //} else { 
             if (factoryGnosis.has(log.address.toLowerCase())) {
                     sigs.push(getSig(ctx, log, c))
