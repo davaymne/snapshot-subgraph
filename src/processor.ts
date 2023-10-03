@@ -7,6 +7,7 @@ import {
     Log as _Log,
     Transaction as _Transaction,
 } from '@subsquid/evm-processor'
+import {Store} from '@subsquid/typeorm-store'
 import * as DelegateRegistry from "./abi/DelegateRegistry";
 import * as GnosisSafe from "./abi/GnosisSafe";
 import * as ProxyFactory100 from "./abi/GnosisSafeProxyFactory_v1.0.0";
@@ -61,3 +62,4 @@ export type Block = BlockHeader<Fields>
 export type Log = _Log<Fields>
 export type Transaction = _Transaction<Fields>
 export type ProcessorContext<Store> = DataHandlerContext<Store, Fields>
+export type Context = DataHandlerContext<Store, Fields>
