@@ -23,15 +23,17 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     let gnosis: string[] = []
     for (let c of ctx.blocks) {
         let delegateLog = false
+        ctx.log.info(`factoryGnosis: ${factoryGnosis}`)
         for (let log of c.logs) {
             // decode and normalize the tx data GnosisSafe
             if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
-                gnosis.push(getGnosisID(ctx, log))
-            } else { 
-                if (factoryGnosis.has(log.address)) {
+                //gnosis.push(getGnosisID(ctx, log))
+                getGnosisID(ctx, log)
+            //} else { 
+            if (factoryGnosis.has(log.address.toLowerCase())) {
                     sigs.push(getSig(ctx, log, c))
                 }
-            }
+            //}
             // decode and normalize the tx data SetDelegate
             if(log.topics[0] === DelegateRegistry.events.SetDelegate.topic) {
                 if (log.address.toLowerCase()!=DELEGATEREGISTRY) {
