@@ -8,12 +8,12 @@ import * as ProxyFactory100 from "./abi/GnosisSafeProxyFactory_v1.0.0";
 import * as ProxyFactory111 from "./abi/GnosisSafeProxyFactory_v1.1.1";
 import * as ProxyFactory130 from "./abi/GnosisSafeProxyFactory_v1.3.0";
 let factoryGnosis: Set<string>
+const PROXYFACTORY100 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
+const PROXYFACTORY111 = '0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B'.toLowerCase()
+const PROXYFACTORY130 = '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'.toLowerCase()
+const DELEGATEREGISTRY = '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'.toLowerCase()
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
-    const PROXYFACTORY100 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
-    const PROXYFACTORY111 = '0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B'.toLowerCase()
-    const PROXYFACTORY130 = '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'.toLowerCase()
-    const DELEGATEREGISTRY = '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'.toLowerCase()
     const sigs: Sig[] = []
     const delegationsSet: Map<string, Delegation> = new Map()
     const delegationsClear: string[] = []
@@ -92,9 +92,12 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
 
 function getGnosisID(ctx: Context, log: Log): string {
     ctx.log.info(`getGnosisID_1: {log.block}, ${log}`)
-    let event = ProxyFactory100.events.ProxyCreation.decode(log)
+    let event = ''
+    if (log.address.toLowerCase() === PROXYFACTORY100) {let event = ProxyFactory100.events.ProxyCreation.decode(log)}
+    if (log.address.toLowerCase() === PROXYFACTORY111) {let event = ProxyFactory111.events.ProxyCreation.decode(log)} 
+    if (log.address.toLowerCase() === PROXYFACTORY130) {let event = ProxyFactory130.events.ProxyCreation.decode(log)} 
     ctx.log.info(`getGnosisID_2: ${event}`)
-    let id = event.proxy.toLowerCase()
+    let id = event.toLowerCase()
     ctx.log.info(`getGnosisID_3: ${id}`)
     factoryGnosis.add(id)
     ctx.log.debug({block: log.block}, `Created Gnosis ID ${id}`)
