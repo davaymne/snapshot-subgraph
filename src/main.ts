@@ -111,7 +111,7 @@ function getGnosisID(ctx: Context, log: Log): string {
     } 
     //let { proxy, singleton } = ProxyFactory130.events.ProxyCreation.decode(log)
     ctx.log.info(`getGnosisID_2: ${proxy}`)
-    let id = proxy[0].toLowerCase()
+    let id = proxy.toLowerCase()
     ctx.log.info(`getGnosisID_3: ${id}`)
     factoryGnosis.add(id)
     ctx.log.debug({block: log.block}, `Created Gnosis ID ${id}`)
