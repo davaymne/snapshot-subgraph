@@ -7,8 +7,8 @@ import { time } from 'console';
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     const PROXYFACTORY100 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
-    const PROXYFACTORY111 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
-    const PROXYFACTORY130 = '0x12302fE9c02ff50939BaAaaf415fc226C078613C'.toLowerCase()
+    const PROXYFACTORY111 = '0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B'.toLowerCase()
+    const PROXYFACTORY130 = '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'.toLowerCase()
     const DELEGATEREGISTRY = '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'.toLowerCase()
     const sigs: Sig[] = []
     const delegationsSet: Map<string, Delegation> = new Map()
