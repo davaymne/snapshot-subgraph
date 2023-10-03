@@ -23,7 +23,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     let gnosis: string[] = []
     for (let c of ctx.blocks) {
         let delegateLog = false
-        ctx.log.info(`factoryGnosis: ${factoryGnosis}`)
+        for (const value of factoryGnosis) {
+            ctx.log.info(`value: ${value}`)
+        }
         for (let log of c.logs) {
             // decode and normalize the tx data GnosisSafe
             if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
