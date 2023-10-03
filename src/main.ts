@@ -91,8 +91,11 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
 }
 
 function getGnosisID(ctx: Context, log: Log): string {
+    ctx.log.info(`getGnosisID_1: {log.block}, ${log}`)
     let event = ProxyFactory100.events.ProxyCreation.decode(log)
+    ctx.log.info(`getGnosisID_2: ${event}`)
     let id = event.proxy.toLowerCase()
+    ctx.log.info(`getGnosisID_3: ${id}`)
     factoryGnosis.add(id)
     ctx.log.debug({block: log.block}, `Created Gnosis ID ${id}`)
     return id
