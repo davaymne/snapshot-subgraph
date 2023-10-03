@@ -91,7 +91,7 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
 }
 
 function getGnosisID(ctx: Context, log: Log): string {
-    ctx.log.info(`getGnosisID_1: {log.block}, ${log}`)
+    ctx.log.info(`getGnosisID_1: ${log.block}, ${log.address}, {log.address}`)
     let event = ''
     if (log.address.toLowerCase() === PROXYFACTORY100) {let event = ProxyFactory100.events.ProxyCreation.decode(log)}
     if (log.address.toLowerCase() === PROXYFACTORY111) {let event = ProxyFactory111.events.ProxyCreation.decode(log)} 
