@@ -27,6 +27,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
         //    ctx.log.info(`value: ${value}`)
         //}
         for (let log of c.logs) {
+            if (c.header.height === 14313030) {
+                ctx.log.info(`0=======14313030======== ${c.header.height}, ${log.address} =============================================`)
+            }
             // decode and normalize the tx data GnosisSafe
             if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
                 //gnosis.push(getGnosisID(ctx, log))
