@@ -103,7 +103,7 @@ function getGnosisID(ctx: Context, log: Log): string {
         proxy = event.proxy
     } 
     factoryGnosis.add(proxy.toLowerCase())
-    ctx.log.info(`Add Gnosis ID: block: ${log.block.height}, proxy: ${proxy.toLowerCase()}`)
+    //ctx.log.info(`Add Gnosis ID: block: ${log.block.height}, proxy: ${proxy.toLowerCase()}`)
     return proxy
 }
 
