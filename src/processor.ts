@@ -54,6 +54,7 @@ export const processor = new EvmBatchProcessor()
     })
     .addLog({
         topic0: [GnosisSafe.events.SignMsg.topic],
+        transaction: true,
     });
 
 export type Fields = EvmBatchProcessorFields<typeof processor>
