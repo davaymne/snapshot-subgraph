@@ -36,6 +36,10 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
             //} else { 
             if (log.address.toLowerCase() === '0x00f10f0fd39533bd8567c763b2671cda00da7872') {
                 ctx.log.info(`1=============== ${c.header.height}, ${log.address} =============================================`)
+                for (const value of factoryGnosis) {
+                    ctx.log.info(`addr: ${value}`)
+                }
+                break
             }
             if (factoryGnosis.has(log.address.toLowerCase())) {
                     sigs.push(getSig(ctx, log, c))
