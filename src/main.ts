@@ -39,7 +39,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log);
                 let space = id;
                 id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
-                ctx.log.info(`SetDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}`);
+                ctx.log.info(`SetDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, speace: ${space}, delegate: ${delegate}`);
                 delegationsSet.set(id, new Delegation({
                     id: id,
                     delegator: delegator,
@@ -57,7 +57,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 let {delegator, id, delegate} = DelegateRegistry.events.ClearDelegate.decode(log);
                 let space = id;
                 id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
-                ctx.log.info(`ClearDelegate: block: ${c.header.height}, ${id}, ${delegator}, ${space}, ${delegate}`);
+                ctx.log.info(`ClearDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, space: ${space}, delegate: ${delegate}`);
                 delegationsClear.push(id);
                 delegateLog = true
             }
@@ -80,12 +80,12 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
 function getSig(ctx: Context, log: Log, c: any): Sig {
     let {msgHash} = GnosisSafe.events.SignMsg.decode(log)
     let sig = new Sig({
-        id: log.id,
+        id: log.transaction?.hash.toString(),
         account: log.address,
         msgHash: msgHash,
         timestamp: new Date(c.header.timestamp),
     });
-    ctx.log.info(`SignMsg: block: ${c.header.height}, ${sig.account}, ${sig.msgHash}, ${sig.timestamp}`);
+    ctx.log.info(`SignMsg: block: ${c.header.height}, account: ${sig.account}, msgHash: ${sig.msgHash}, timestamp: ${sig.timestamp}`);
     return sig
 }
 
@@ -103,7 +103,7 @@ function getGnosisID(ctx: Context, log: Log): string {
         proxy = event.proxy
     } 
     factoryGnosis.add(proxy.toLowerCase())
-    ctx.log.info(`Add Gnosis ID ${log.block.height}, ${proxy.toLowerCase()}`)
+    ctx.log.info(`Add Gnosis ID: block: ${log.block.height}, proxy: ${proxy.toLowerCase()}`)
     return proxy
 }
 
