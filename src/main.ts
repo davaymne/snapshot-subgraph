@@ -40,7 +40,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 }
                 let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log);
                 let space = id;
-                id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
+                id  = delegator.concat('-').concat(space).concat('-').concat(delegate);
                 ctx.log.info(`SetDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, space: ${space}, delegate: ${delegate}`);
                 delegationsSet.set(id, new Delegation({
                     id: id,
@@ -58,7 +58,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 }
                 let {delegator, id, delegate} = DelegateRegistry.events.ClearDelegate.decode(log);
                 let space = id;
-                id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
+                id  = delegator.concat('-').concat(space).concat('-').concat(delegate);
                 ctx.log.info(`ClearDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, space: ${space}, delegate: ${delegate}`);
                 delegationsClear.push(id);
                 delegateLog = true
