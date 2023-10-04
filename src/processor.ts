@@ -34,7 +34,7 @@ export const processor = new EvmBatchProcessor()
         },
     })
     .setBlockRange({
-        from: 14_300_000,
+        from: 11_000_000,
     })
     .addLog({
         address: ["0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446"],

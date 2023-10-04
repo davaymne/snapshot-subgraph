@@ -39,7 +39,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 let {delegator, id, delegate} = DelegateRegistry.events.SetDelegate.decode(log);
                 let space = id;
                 id  = delegator.concat('-').concat(id).concat('-').concat(delegate).concat('').concat(c.header.timestamp.toString());
-                ctx.log.info(`SetDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, speace: ${space}, delegate: ${delegate}`);
+                ctx.log.info(`SetDelegate: block: ${c.header.height}, id: ${id}, delegator: ${delegator}, space: ${space}, delegate: ${delegate}`);
                 delegationsSet.set(id, new Delegation({
                     id: id,
                     delegator: delegator,
@@ -91,7 +91,6 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
 
 function getGnosisID(ctx: Context, log: Log): string {
     let proxy: string = ''
-    let singleton: string = ''
     if (log.address.toLowerCase() === PROXYFACTORY100) {
         proxy = ProxyFactory100.events.ProxyCreation.decode(log).proxy
     }
