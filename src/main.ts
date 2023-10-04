@@ -25,13 +25,10 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
         let delegateLog = false
         for (let log of c.logs) {
             // decode and normalize the tx data GnosisSafe
-            if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
+            if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())
+                && [ProxyFactory100.events.ProxyCreation.topic, ProxyFactory111.events.ProxyCreation.topic, ProxyFactory130.events.ProxyCreation.topic].includes(log.topics[0])) {
                 getGnosisID(ctx, log)
             }
-//            if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())
-//                && [ProxyFactory100.events.ProxyCreation.topic, ProxyFactory111.events.ProxyCreation.topic, ProxyFactory130.events.ProxyCreation].includes(log.topics[0])) {
-//                getGnosisID(ctx, log)
-//            }
             if (factoryGnosis.has(log.address.toLowerCase()) && log.topics[0] === GnosisSafe.events.SignMsg.topic) {
                 sigs.push(getSig(ctx, log, c))
             }
