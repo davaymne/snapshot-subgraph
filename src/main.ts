@@ -25,10 +25,11 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
         let delegateLog = false
         for (let log of c.logs) {
             // decode and normalize the tx data GnosisSafe
-            if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())) {
+            if ([PROXYFACTORY100, PROXYFACTORY111, PROXYFACTORY130].includes(log.address.toLowerCase())
+                && [ProxyFactory100.events.ProxyCreation.topic, ProxyFactory111.events.ProxyCreation.topic, ProxyFactory130.events.ProxyCreation].includes(log.topics[0])) {
                 getGnosisID(ctx, log)
             }
-            if (factoryGnosis.has(log.address.toLowerCase())) {
+            if (factoryGnosis.has(log.address.toLowerCase()) && log.topics[0] === GnosisSafe.events.SignMsg.topic) {
                 sigs.push(getSig(ctx, log, c))
             }
             // decode and normalize the tx data SetDelegate
@@ -72,6 +73,9 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     ctx.log.info(`Blocks:  ${startBlock} to ${endBlock}`)
 
     // upsert batches of entities with batch-optimized ctx.store.save
+    for (let sig of sigs) {
+        ctx.log.info(`SignMsg: ${sig.id}, ${sig.account}, ${sig.msgHash}, ${sig.timestamp}`);
+    }
     await ctx.store.upsert(sigs);
     await ctx.store.upsert([...delegationsSet.values()]);
     if (delegationsClear.length != 0) {await ctx.store.remove(Delegation, [...delegationsClear]);}
