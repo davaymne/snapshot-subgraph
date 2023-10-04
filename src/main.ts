@@ -87,7 +87,7 @@ function getSig(ctx: Context, log: Log, c: any): Sig {
         msgHash: msgHash,
         timestamp: new Date(c.header.timestamp),
     });
-    ctx.log.info(`SignMsg: block: ${c.header.height}, account: ${sig.account}, msgHash: ${sig.msgHash}, timestamp: ${sig.timestamp}`);
+    ctx.log.info(`SignMsg: block: ${c.header.height}, id: ${sig.id}, account: ${sig.account}, msgHash: ${sig.msgHash}, timestamp: ${sig.timestamp}`);
     return sig
 }
 
