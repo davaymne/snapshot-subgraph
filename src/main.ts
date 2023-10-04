@@ -84,7 +84,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
 function getSig(ctx: Context, log: Log, c: any): Sig {
     let {msgHash} = GnosisSafe.events.SignMsg.decode(log)
     let sig = new Sig({
-        id: log.transaction?.hash.toString(),
+        id: log.transaction?.hash.toString().concat('-').concat(msgHash),
         account: log.address,
         msgHash: msgHash,
         timestamp: new Date(c.header.timestamp),
