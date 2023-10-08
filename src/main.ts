@@ -69,7 +69,7 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
                 delegateLog = true
             }
         }
-        if (delegateLog === true) {
+        if (delegateLog) {
             await ctx.store.upsert(new Block({id: c.header.hash, number: BigInt(c.header.height), timestamp: new Date(c.header.timestamp)}));
         }
     }
