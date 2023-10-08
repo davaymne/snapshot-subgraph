@@ -82,7 +82,7 @@ query MyQuery {
   }
 }
 ```
-<img width="1392" alt="Screenshot 2023-10-05 at 00 47 32" src="https://github.com/davaymne/snapshot-subgraph-migration/assets/29555611/de5fb254-e510-4579-a377-3cb74cf52724">
+<img width="1392" alt="Screenshot 2023-10-06 at 00 47 32" src="https://github.com/davaymne/snapshot-subgraph-migration/assets/29555611/de5fb254-e510-4579-a377-3cb74cf52724">
 
 
 ### The Graph Query
